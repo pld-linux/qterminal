@@ -1,41 +1,48 @@
 #
 # Conditional build:
 #
-%define		qtver		5.3.1
+%define		qtver		6.6.0
 
-Summary:	qterminal
+Summary:	Advanced Qt6-based terminal emulator
+Summary(pl.UTF-8):	Zaawansowany, bazujący na Qt6 emulator terminala
 Name:		qterminal
-Version:	0.7.0
+Version:	2.3.0
 Release:	1
 License:	GPLv2 and LGPL-2.1+
 Group:		X11/Applications
-Source0:	http://downloads.lxqt.org/qterminal/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	566ba64cbec739b94b0ba2bc9cca2880
+Source0:	https://github.com/lxqt/qterminal/releases/download/%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	30afe5f9b06e84f3c8a9264da68c0367
 URL:		http://www.lxqt.org/
-BuildRequires:	cmake >= 2.8.11
-BuildRequires:	glib2-devel
-BuildRequires:	liblxqt-devel >= 0.11.0
-BuildRequires:	libqtxdg-devel >= 2.0.0
-BuildRequires:	qtermwidget-devel >= 0.7.0
+BuildRequires:	Qt6Core-devel >= %{qtver}
+BuildRequires:	Qt6DBus-devel >= %{qtver}
+BuildRequires:	Qt6Gui-devel >= %{qtver}
+BuildRequires:	Qt6Test-devel >= %{qtver}
+BuildRequires:	Qt6Widgets-devel >= %{qtver}
+BuildRequires:	cmake >= 3.18.0
+BuildRequires:	kp6-layer-shell-qt-devel >= 6.0.0
+BuildRequires:	libcanberra-devel
+BuildRequires:	lxqt-build-tools >= 2.3.0
+BuildRequires:	qt6-linguist >= %{qtver}
+BuildRequires:	qtermwidget-devel >= 2.3.0
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xz-devel
-Requires:	lxqt-common
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-qterminal
+Advanced Qt6-based terminal emulator with many useful bells and
+whistles.
+
+%description -l pl.UTF-8
+Zaawansowany emulator terminala oparty na Qt6, wyposażony w wiele
+przydatnych funkcji.
 
 %prep
 %setup -q
 
 %build
-install -d build
-cd build
-%cmake \
-	-DPULL_TRANSLATIONS:BOOL=OFF \
-	../
+%cmake -B build
 
-%{__make}
+%{__make} -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -43,15 +50,19 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-#%find_lang %{name} --all-name --with-qm
+%find_lang %{name} --with-qm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/qterminal
 %{_desktopdir}/qterminal.desktop
-%{_desktopdir}/qterminal_drop.desktop
-%{_datadir}/appdata/qterminal.appdata.xml
 %{_iconsdir}/hicolor/64x64/apps/qterminal.png
+%{_desktopdir}/qterminal-drop.desktop
+%{_datadir}/metainfo/qterminal.metainfo.xml
+%dir %{_datadir}/qterminal
+# required for the lang files
+%dir %{_datadir}/qterminal/translations
+%{_datadir}/qterminal/qterminal_bookmarks_example.xml
