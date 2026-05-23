@@ -6,12 +6,12 @@
 Summary:	Advanced Qt6-based terminal emulator
 Summary(pl.UTF-8):	Zaawansowany, bazujący na Qt6 emulator terminala
 Name:		qterminal
-Version:	2.3.0
+Version:	2.4.0
 Release:	1
 License:	GPLv2 and LGPL-2.1+
 Group:		X11/Applications
 Source0:	https://github.com/lxqt/qterminal/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	30afe5f9b06e84f3c8a9264da68c0367
+# Source0-md5:	d381d0aad8d9eb44368c5ddcd22dade5
 URL:		http://www.lxqt.org/
 BuildRequires:	Qt6Core-devel >= %{qtver}
 BuildRequires:	Qt6DBus-devel >= %{qtver}
@@ -21,9 +21,9 @@ BuildRequires:	Qt6Widgets-devel >= %{qtver}
 BuildRequires:	cmake >= 3.18.0
 BuildRequires:	kp6-layer-shell-qt-devel >= 6.0.0
 BuildRequires:	libcanberra-devel
-BuildRequires:	lxqt-build-tools >= 2.3.0
+BuildRequires:	lxqt-build-tools >= 2.4.0
 BuildRequires:	qt6-linguist >= %{qtver}
-BuildRequires:	qtermwidget-devel >= 2.3.0
+BuildRequires:	qtermwidget-devel >= 2.4.0
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xz-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
